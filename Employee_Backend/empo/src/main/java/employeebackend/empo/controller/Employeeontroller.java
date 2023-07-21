@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/empo")
+@CrossOrigin(origins = "http://localhost:3000")
 public class Employeeontroller {
     @Autowired
     private EmployeeService employeeService;
@@ -34,4 +35,5 @@ public class Employeeontroller {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  
 }
