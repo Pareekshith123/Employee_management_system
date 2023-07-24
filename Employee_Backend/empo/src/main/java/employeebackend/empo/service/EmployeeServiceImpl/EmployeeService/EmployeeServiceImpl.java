@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService
@@ -21,10 +22,25 @@ public class EmployeeServiceImpl implements EmployeeService
     }
 
     @Override
-    public EmployeeEntity updateEmployee(Integer id, EmployeeEntity employeeEntity) {
+public EmployeeEntity updateEmployee(Integer id, EmployeeEntity employeeEntity) {
+    Optional<EmployeeEntity> employeeOptional = this.employeeRepo.findById(id);
 
-    return null;
+    if (employeeOptional.isPresent()) {
+        EmployeeEntity existingEmployee = employeeOptional.get();
+
+        // Update the fields from the input employeeEntity
+        existingEmployee.setFirstName(employeeEntity.getFirstName());
+        existingEmployee.setLastName(employeeEntity.getLastName());
+        existingEmployee.setEmail(employeeEntity.getEmail());
+        existingEmployee.setPhone(employeeEntity.getPhone());
+
+        // Save the updated employee entity to the database
+        return this.employeeRepo.save(existingEmployee);
+    } else {
+        return null; // For simplicity, returning null if employee not found (you may handle it differently)
     }
+}
+
 
     @Override
     public List<EmployeeEntity> getAllEmployees() {
@@ -35,11 +51,14 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public EmployeeEntity getEmployeeById(Integer id) {
-        return null;
+        Optional<EmployeeEntity> employeeOptional = this.employeeRepo.findById(id);
+        return employeeOptional.orElse(null); // or use employeeOptional.get() if you are sure it will always have a value
     }
+    
 
     @Override
     public void delete(Integer id) {
         this.employeeRepo.deleteById(id);
     }
+
 }

@@ -22,8 +22,19 @@ const EmployeeList = () => {
 
     fetchData();
   }, []);
+  const editEmployee= async(e,id)=>{
+    e.preventDefault();
+    navigate(`/EmployeeEdit/${id}`); 
+    try {
+      // await EmployeeService.updateEmployee(id);
+      // Update the employees state after deletion
+   
+    } catch (error) {
+      console.log("Error while deleting employee:", error);
+    }
+  }
   const deleteEmployee = async (e, id) => {
-    window.location.reload();
+    window.location.reload(2);
     
     try {
       await EmployeeService.deleteEmployee(id);
@@ -72,7 +83,7 @@ const EmployeeList = () => {
                     <div className='text-sm text-gray-500'>{employee.phone}</div>
                   </td>
                   <td className='text-right px-6 py-4 whitespace-nowrap font-medium text-sm'>
-                    <a href='#'  className='text-indigo-600 hover:text-indigo-800 px-4'>Edit</a>
+                    <a href='#' onClick={(e,id)=>editEmployee(e,employee.id)} className='text-indigo-600 hover:text-indigo-800 px-4'>Edit</a>
                     <a href='#' onClick={(e,id)=>deleteEmployee(e,employee.id)} className='text-red-600 hover:text-indigo-800 px-4'>Delete</a>
                   </td>
                 </tr>

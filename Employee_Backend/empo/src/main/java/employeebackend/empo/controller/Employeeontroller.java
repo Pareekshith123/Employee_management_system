@@ -35,9 +35,29 @@ public class Employeeontroller {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id){
          this.employeeService.delete(id);
     }
-  
+
+
+    // ...
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<EmployeeEntity> getEmployeeById(@PathVariable Integer id) {
+        EmployeeEntity employee = this.employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
+    }
+    @PutMapping("/update/{id}")
+public ResponseEntity<EmployeeEntity> updateemployee(@PathVariable Integer id, @RequestBody EmployeeEntity employeeEntityntity) {
+    EmployeeEntity updatedEmployee = this.employeeService.updateEmployee(id, employeeEntityntity);
+
+    if (updatedEmployee != null) {
+        return ResponseEntity.ok(updatedEmployee);
+    } else {
+        // If the employee is not found, return a "404 Not Found" response
+        return ResponseEntity.notFound().build();
+    }
 }
+}
+
