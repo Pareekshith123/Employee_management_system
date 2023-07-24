@@ -29,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService
     @Override
     public List<EmployeeEntity> getAllEmployees() {
         List<EmployeeEntity> all = this.employeeRepo.findAll();
+        
         return all;
     }
 
@@ -39,6 +40,6 @@ public class EmployeeServiceImpl implements EmployeeService
 
     @Override
     public void delete(Integer id) {
-
+        this.employeeRepo.deleteById(id);
     }
 }

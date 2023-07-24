@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import EmployeeService from './Service/EmployeeService';
-
+import { useNavigate } from 'react-router-dom';
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
     id: "",
@@ -9,9 +9,9 @@ const AddEmployee = () => {
     email: "",
     phone: ""
   });
-
+ const navigate=useNavigate();
   const saveEmployee = (e) => {
-    e.preventDefault();
+     
     EmployeeService.saveEmployee(employee)
       .then((res) => {
         // Handle successful save if needed
@@ -20,6 +20,7 @@ const AddEmployee = () => {
       .catch((error) => {
         console.log("Error while saving employee:", error);
       });
+      navigate('/employeeList')
   };
 
   const handleChange = (e) => {
@@ -28,7 +29,7 @@ const AddEmployee = () => {
   };
 
   const clearEmployee = (e) => {
-    e.preventDefault();
+    window.location.reload();
     setEmployee({
       id: "",
       firstName: "",
@@ -36,6 +37,7 @@ const AddEmployee = () => {
       email: "",
       phone: ""
     });
+
   };
 
   return (

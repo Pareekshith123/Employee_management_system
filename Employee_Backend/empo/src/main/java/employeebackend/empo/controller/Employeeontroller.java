@@ -35,5 +35,9 @@ public class Employeeontroller {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id){
+         this.employeeService.delete(id);
+    }
   
 }
